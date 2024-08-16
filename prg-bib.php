@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name:       PRG Bibliography Shortcode
- * Plugin URI:        https://github.com/prg-titech/prg-papers-bib/issues/65
+ * Plugin URI:        https://github.com/prg-titech/bib-shortcode/
  * Description:       Shortcode to embed publication lists.
  * Version:           N/A
  * Requires at least: 5.2
