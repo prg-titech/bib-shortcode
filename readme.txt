@@ -3,7 +3,7 @@ Contributors: masuhara
 Tags: bibtex, bibliography, citation
 Requires at least: 5.2
 Tested up to: 6.6.1
-Stable tag: v0.1-alpha
+Stable tag: v0.1.1-alpha
 Requires PHP: 7.2
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -21,6 +21,9 @@ Usage
 ```
 
 == Changelog ==
+
+- v0.1.1-alpha
+  A test release for checking how it would look like in the installation.
 
 - v0.1-alpha
   The initial release.
