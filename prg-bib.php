@@ -16,6 +16,28 @@
  * Requires Plugins:  
  */
 
+
+/**
+ * Our theme/plugin enqueue scripts function.
+ * see https://www.briancoords.com/how-to-enqueue-js-for-a-shortcode/
+ */
+function prg_bib_enqueue_scripts() {
+	
+	// Register the script in the normal WordPress way.
+	wp_register_script( 'resize-iframe-js',
+                        plugins_url('resize-iframe.js',__FILE__));
+	
+	// Grab the global $post object.
+	global $post;
+	
+	// See if the post HAS content and, if so, see if it has our shorcode.
+	if ( isset( $post->post_content ) &&
+         has_shortcode( $post->post_content, 'prg-bib' ) ) {
+		wp_enqueue_script( 'resize-iframe-js' );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'prg_bib_enqueue_scripts' );
+
 // Add Shortcode
 function prg_bib_shortcode( $atts ) {
 
@@ -27,12 +49,13 @@ function prg_bib_shortcode( $atts ) {
 		$atts
 	);
 
-    $code = "<script>  function resizeIframe(obj) {
-    obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
-    obj.style.width = '100%';
-    obj.style.border = 'none';
-  }
-</script>
+//     $code = "<script>  function resizeIframe(obj) {
+//     obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+//     obj.style.width = '100%';
+//     obj.style.border = 'none';
+//   }
+// </script>";
+    $code = "
 <iframe src='https://prg.is.titech.ac.jp/papers/bibtexbrowser.php?key=". $atts['key'] ."&bib=prg-e.bib;prg-j.bib;thesis-d.bib;thesis-m.bib;thesis-b.bib' class='bibtexbrowser' onload='resizeIframe(this)'></iframe>";
 
     
