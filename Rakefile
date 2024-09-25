@@ -1,5 +1,10 @@
+README = "readme.txt"
 SRC = ["prg-bib.php"]
-ZIP = "prg-bib.zip"
+GIT_TAG = `git describe --tag --exact-match`.chomp
+README_TAG = /^Stable tag: *(.*) *$/.match(open(README).read)[1]
+ZIP = "prg-bib-#{README_TAG}.zip"
+raise "tag mismatch: #{GIT_TAG}(git), #{README_TAG}(#{README})" \
+      unless GIT_TAG == README_TAG
 
 file ZIP => SRC do
   dirname = File.basename(Dir.pwd)
