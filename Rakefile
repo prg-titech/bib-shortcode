@@ -1,10 +1,12 @@
 README = "readme.txt"
-SRC = ["prg-bib.php"]
+SRC = ["prg-bib.php", "resize-iframe.js", README]
 GIT_TAG = `git describe --tag --exact-match`.chomp
 README_TAG = /^Stable tag: *(.*) *$/.match(open(README).read)[1]
 ZIP = "prg-bib-#{README_TAG}.zip"
 raise "tag mismatch: #{GIT_TAG}(git), #{README_TAG}(#{README})" \
       unless GIT_TAG == README_TAG
+changes=`git status --porcelain --untracked-files=no`.chomp
+raise "there are changes: #{changes}" unless changes.empty?
 
 file ZIP => SRC do
   dirname = File.basename(Dir.pwd)
