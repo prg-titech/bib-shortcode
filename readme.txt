@@ -20,6 +20,18 @@ Usage
 [prg-bib key=alice2099abc]
 ```
 
+= How to update =
+1. Decide the release name (e.g., v0.1.3-alpha)
+2. Write the release name on Stable tag in readme.txt
+3. Add a Changelog section in readme.txt
+4. Locally commit changes
+5. Locally add a release tag (git tag v0.1.3-alpha)
+6. Push the tag to github (git push --tags)
+7. Make an archive by locally running rake
+8. On https://github.com/prg-titech/bib-shortcode/tags, select the pushed tag
+9. Create a release from a tag
+10. Upload the archive (created at step 7) to the release
+
 == Changelog ==
 
 - v0.1.3-alpha
