@@ -3,7 +3,7 @@ Contributors: masuhara
 Tags: bibtex, bibliography, citation
 Requires at least: 5.2
 Tested up to: 6.6.1
-Stable tag: v0.1.4-alpha
+Stable tag: v0.1.5-alpha
 Requires PHP: 7.2
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -33,6 +33,9 @@ Usage
 10. Upload the archive (created at step 7) to the release
 
 == Changelog ==
+
+- v0.1.5-alpha
+  IMPROVEMENT: support multiple keys
 
 - v0.1.4-alpha
   FIX: check release tag in .php

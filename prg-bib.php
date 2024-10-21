@@ -3,7 +3,7 @@
  * Plugin Name:       PRG Bibliography Shortcode
  * Plugin URI:        https://github.com/prg-titech/bib-shortcode/
  * Description:       Shortcode to embed publication lists.
- * Version:           0.1.4-alpha
+ * Version:           0.1.5-alpha
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Hidehiko Masuhara
@@ -48,16 +48,17 @@ function prg_bib_shortcode( $atts ) {
 		),
 		$atts
 	);
-
+    $code = "";
+    foreach(preg_split("/\,/", $atts['key']) as $key) {
 //     $code = "<script>  function resizeIframe(obj) {
 //     obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
 //     obj.style.width = '100%';
 //     obj.style.border = 'none';
 //   }
 // </script>";
-    $code = "
-<iframe src='https://prg.is.titech.ac.jp/papers/bibtexbrowser.php?key=". $atts['key'] ."&bib=prg-e.bib;prg-j.bib;thesis-d.bib;thesis-m.bib;thesis-b.bib' class='bibtexbrowser' onload='resizeIframe(this)'></iframe>";
-
+        $code .= "
+<iframe src='https://prg.is.titech.ac.jp/papers/bibtexbrowser.php?key=". $key ."&bib=prg-e.bib;prg-j.bib;thesis-d.bib;thesis-m.bib;thesis-b.bib' class='bibtexbrowser' onload='resizeIframe(this)'></iframe>";
+    }
     
 	return $code; // '<p>Hello PRG Bib Shortcode</p>';
 
