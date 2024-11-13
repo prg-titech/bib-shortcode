@@ -3,7 +3,7 @@ Contributors: masuhara
 Tags: bibtex, bibliography, citation
 Requires at least: 5.2
 Tested up to: 6.6.1
-Stable tag: v0.1.5-alpha
+Stable tag: v0.1.6-alpha
 Requires PHP: 7.2
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -17,8 +17,12 @@ It is customized for PRG\'s website where `bibtexbrowser.php` is installed under
 
 Usage
 ```
-[prg-bib key=alice2099abc]
+[prg-bib key='alice2099abc,bob2088def' more='false']
 ```
+
+Parameters:
+- key: specifies entries as a comma-separated list of bib keys.
+- more: displays a "(more...)" link to the bibliography page instead of embedding the bibliography frame in a page, when the page is shown in a front page of a website.  This option is true by default, and turned off when specified a value other than 'true'.
 
 = How to update =
 1. Decide the release name (e.g., v0.1.3-alpha)
@@ -33,6 +37,9 @@ Usage
 10. Upload the archive (created at step 7) to the release
 
 == Changelog ==
+
+- v0.1.6-alpha
+  IMPROVEMENT: add the "more" option
 
 - v0.1.5-alpha
   IMPROVEMENT: support multiple keys
