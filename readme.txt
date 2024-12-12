@@ -3,7 +3,7 @@ Contributors: masuhara
 Tags: bibtex, bibliography, citation
 Requires at least: 5.2
 Tested up to: 6.6.1
-Stable tag: v0.1.6-alpha
+Stable tag: v0.1.7-alpha
 Requires PHP: 7.2
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -18,6 +18,11 @@ It is customized for PRG\'s website where `bibtexbrowser.php` is installed under
 Usage
 ```
 [prg-bib key='alice2099abc,bob2088def' more='false']
+```
+
+To show a list of the papers authored by Hidehiko:
+```
+[prg-bib author='Hidehiko Masuhara' more='false']
 ```
 
 Parameters:
@@ -37,6 +42,9 @@ Parameters:
 10. Upload the archive (created at step 7) to the release
 
 == Changelog ==
+
+- v0.1.7-alpha
+  IMPROVEMENT: add the "author" option
 
 - v0.1.6-alpha
   IMPROVEMENT: add the "more" option

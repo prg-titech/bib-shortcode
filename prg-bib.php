@@ -3,7 +3,7 @@
  * Plugin Name:       PRG Bibliography Shortcode
  * Plugin URI:        https://github.com/prg-titech/bib-shortcode/
  * Description:       Shortcode to embed publication lists.
- * Version:           0.1.6-alpha
+ * Version:           0.1.7-alpha
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Hidehiko Masuhara
@@ -112,60 +112,3 @@ HTML;
     
 }
 add_shortcode( 'prg-bib', 'prg_bib_shortcode' );
-
-/*
-The next option shall produce a fragment like below.
-
----
-<div>
-  <div class="linksblock">
-    <a title="publications of the group" 
-       href="https://prg.is.titech.ac.jp/papers/">👥</a>
-  <div style="position: absolute; padding-left: 8px; padding-top: 2px;">
-    <img src="https://prg.is.titech.ac.jp/wp-content/plugins/qtranslate/flags/jp.png" />
-  </div>
-  <div style="position: absolute; padding-left: 2px; padding-top: 10px;">
-    <img src="https://prg.is.titech.ac.jp/wp-content/plugins/qtranslate/flags/gb.png" />
-  </div>
-  <a title="publications both in English and Japanese" 
-     href="https://prg.is.titech.ac.jp/papers/bibtexbrowser.php?frameset&amp;bib=prg-e.bib;prg-j.bib;thesis-b.bib;thesis-m.bib;thesis-d.bib">
-    <span class="transparent">👥</span>
-  </a> 
-  <a title="full page view" 
-     href="https://prg.is.titech.ac.jp/papers/bibtexbrowser.php?author=Hidehiko+Masuhara&amp;bib=prg-e.bib;thesis-b.bib;thesis-m.bib;thesis-d.bib">
-     ⛶
-  </a>
-  </div>
-  <iframe class="bibtexbrowser" 
-    src="https://prg.is.titech.ac.jp/papers/bibtexbrowser.php?author=Hidehiko+Masuhara&amp;bib=prg-e.bib;thesis-b.bib;thesis-m.bib;thesis-d.bib&amp;notitle=true">
-  </iframe>
-</div>
----
-with CSS 
----
-.linksblock {
-  position: relative;
-  height: 4ex;
-  text-align: right
-}
-
-.linksblock a {
-  display: inline-block; 
-  background-color: #80808060;
-  border-radius: 100%;
-  width: 4ex;
-  height: 4ex;
-  text-align: center;
-  text-decoration: none;
-}
-.transparent{
- visibility: hidden;
-}
-
-.bibtexbrowser{
-  border: none;
-  width: 100%;
-  height: 27lh;
-}
-
- */
