@@ -3,7 +3,7 @@
  * Plugin Name:       PRG Bibliography Shortcode
  * Plugin URI:        https://github.com/prg-titech/bib-shortcode/
  * Description:       Shortcode to embed publication lists.
- * Version:           0.1.7-alpha
+ * Version:           0.1.8-alpha
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Hidehiko Masuhara
@@ -71,13 +71,14 @@ function prg_bib_shortcode( $atts ) {
     } else if ($atts['author']!='') {
         $bib_url = 'https://prg.is.titech.ac.jp/papers/bibtexbrowser.php';
         $author_param = 'author=' . str_replace(' ','+',$atts['author']);
-        $bib_param = 'bib=prg-e.bib;prg-j.bib;thesis-b.bib;thesis-m.bib;thesis-d.bib';
+        $bib_param_e = 'bib=prg-e.bib;thesis-b.bib;thesis-m.bib;thesis-d.bib';
+        $bib_param_ej = $bib_param_e . 'prg-j.bib';
         $code .= <<<HTML
 <div>
   <div class='linksblock'>
     <a title='publications of the group' href='https://prg.is.titech.ac.jp/papers/'>👥</a>
     <a title='publications both in English and Japanese' 
-       href='$bib_url?frameset&amp;$bib_param'>
+       href='$bib_url?frameset&amp;$bib_param_ej'>
         <div style='position: absolute; padding-left: 8px; padding-top: 2px;'>
           <img src='https://prg.is.titech.ac.jp/wp-content/plugins/qtranslate/flags/jp.png' />
         </div>
@@ -87,12 +88,12 @@ function prg_bib_shortcode( $atts ) {
         <span class='transparent'>👥</span> 
     </a> 
     <a title='full page view' 
-       href='$bib_url?$author_param&amp;$bib_param'>
+       href='$bib_url?$author_param&amp;$bib_param_e'>
        ⛶
     </a>
   </div>
   <iframe class='bibtexbrowser' 
-        src='$bib_url?$author_param&amp;$bib_param&amp;notitle=true'>
+        src='$bib_url?$author_param&amp;$bib_param_e&amp;notitle=true'>
   </iframe>
 </div>
 HTML;
