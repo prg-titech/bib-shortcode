@@ -43,6 +43,9 @@ Parameters:
 
 == Changelog ==
 
+- v0.1.9-alpha
+  FIX: missing semicolon
+
 - v0.1.8-alpha
   FIX: the "author" option now shows English papers only
 
