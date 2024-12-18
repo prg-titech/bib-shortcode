@@ -1,6 +1,6 @@
 README = "readme.txt"
 PHP = "prg-bib.php"
-SRC = [PHP, "resize-iframe.js", README]
+SRC = [PHP, "resize-iframe.js", README, "prg-bib.css"]
 GIT_TAG = `git describe --tag --exact-match`.chomp
 README_TAG = /^Stable tag: *(.*) *$/.match(open(README).read)[1]
 PHP_TAG = /\/*.*Version: *([^ ]*) *$/m.match(open(PHP).read)[1]
