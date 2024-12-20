@@ -3,7 +3,7 @@
  * Plugin Name:       PRG Bibliography Shortcode
  * Plugin URI:        https://github.com/prg-titech/bib-shortcode/
  * Description:       Shortcode to embed publication lists.
- * Version:           0.1.10-alpha
+ * Version:           0.1.11-alpha
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Hidehiko Masuhara
@@ -43,37 +43,23 @@ function prg_bib_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'prg_bib_enqueue_scripts' );
 
-// Add Shortcode
-function prg_bib_shortcode( $atts ) {
-    global $post;
+// show 'more...' text when it is shown in the front page
+function prg_bib_show_more( $atts ) {
+    $more_link_text = __( '(more...)' );
+    return apply_filters(
+        'the_content_more_link', 
+        ' <a href="' . get_permalink() .
+            "#more-{$post->ID}\" class=\"more-link\">$more_link_text</a>",
+        $more_link_text );
+}
 
-	// Attributes
-	$atts = shortcode_atts(
-		array(
-			'key' => '',
-            'more' => 'true',
-            'author' => '',
-		),
-		$atts
-	);
-    $code = "";
-    // when the post/page is shown on the front page, this will
-    // produce only a "(more...)" link to the standalone page.
-    // Otherwise (i.e., when it is shown as a standalone page), the
-    // frame is shown.
-    if($atts['more']=='true' && is_front_page() ){
-        $more_link_text = __( '(more...)' );
-        $code .= apply_filters(
-            'the_content_more_link', 
-            ' <a href="' . get_permalink() .
-                "#more-{$post->ID}\" class=\"more-link\">$more_link_text</a>",
-            $more_link_text );
-    } else if ($atts['author']!='') {
-        $bib_url = 'https://prg.is.titech.ac.jp/papers/bibtexbrowser.php';
-        $author_param = 'author=' . str_replace(' ','+',$atts['author']);
-        $bib_param_e = 'bib=prg-e.bib;thesis-b.bib;thesis-m.bib;thesis-d.bib';
-        $bib_param_ej = $bib_param_e . ';prg-j.bib';
-        $code .= <<<HTML
+// list of persons
+function prg_bib_personal_list( $atts ) {
+    $bib_url = 'https://prg.is.titech.ac.jp/papers/bibtexbrowser.php';
+    $author_param = 'author=' . str_replace(' ','+',$atts['author']);
+    $bib_param_e = 'bib=prg-e.bib;thesis-b.bib;thesis-m.bib;thesis-d.bib';
+    $bib_param_ej = $bib_param_e . ';prg-j.bib';
+    $code = <<<HTML
 <div>
   <div class='linksblock'>
     <a title='publications of the group' href='https://prg.is.titech.ac.jp/papers/'>👥</a>
@@ -97,17 +83,47 @@ function prg_bib_shortcode( $atts ) {
   </iframe>
 </div>
 HTML;
-    } else {
-        foreach(preg_split("/\,/", $atts['key']) as $key) {
-            //     $code = "<script>  function resizeIframe(obj) {
-            //     obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
-            //     obj.style.width = '100%';
-            //     obj.style.border = 'none';
-            //   }
-            // </script>";
-            $code .= "
+    return $code;
+}
+
+// per article pages
+function prg_bib_articles( $atts ) {
+    $code = "";
+    foreach(preg_split("/\,/", $atts['key']) as $key) {
+        $code .= "
 <iframe src='https://prg.is.titech.ac.jp/papers/bibtexbrowser.php?key=". $key ."&bib=prg-e.bib;prg-j.bib;thesis-d.bib;thesis-m.bib;thesis-b.bib' class='bibtexbrowser' onload='resizeIframe(this)'></iframe>";
-        }
+    }
+    return $code;
+}
+
+// Add Shortcode
+function prg_bib_shortcode( $atts ) {
+    global $post;
+
+	// Attributes
+	$atts = shortcode_atts(
+		array(
+			'key' => '',
+            'more' => 'true',
+            'author' => '',
+		),
+		$atts
+	);
+    $code = "";
+    if($atts['more']=='true' && is_front_page() ){
+        // when the post/page is shown on the front page, this will
+        // produce only a "(more...)" link to the standalone page.
+        // Otherwise (i.e., when it is shown as a standalone page), the
+        // frame is shown.
+        $code .= prg_bib_show_more($atts);
+    } else if ($atts['author']!='') {
+        // when there is an author parameter, show a list of all
+        // papers authored by the given name
+        $code .= prg_bib_personal_list($atts);
+    } else {
+        // otherwise, there should be a key parameter, and show
+        // per-article pages
+        $code .= prg_bib_articles($atts);
     }
 	return $code;
     
