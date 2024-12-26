@@ -45,7 +45,7 @@ add_action( 'wp_enqueue_scripts', 'prg_bib_enqueue_scripts' );
 
 // show 'more...' text when it is shown in the front page
 function prg_bib_show_more( $atts ) {
-    $more_link_text = __( '(more...)' );
+    $more_link_text = __( '(more&hellip;)' );
     return apply_filters(
         'the_content_more_link', 
         ' <a href="' . get_permalink() .
