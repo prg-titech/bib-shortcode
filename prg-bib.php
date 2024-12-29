@@ -3,7 +3,7 @@
  * Plugin Name:       PRG Bibliography Shortcode
  * Plugin URI:        https://github.com/prg-titech/bib-shortcode/
  * Description:       Shortcode to embed publication lists.
- * Version:           0.1.11-alpha
+ * Version:           0.1.12-alpha
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Hidehiko Masuhara
@@ -54,15 +54,16 @@ function prg_bib_show_more( $atts ) {
 }
 
 // list of persons
-function prg_bib_personal_list( $atts ) {
+function prg_bib_personal_list( $atts, $lang ) {
     $bib_url = 'https://prg.is.titech.ac.jp/papers/bibtexbrowser.php';
     $author_param = 'author=' . str_replace(' ','+',$atts['author']);
     $bib_param_e = 'bib=prg-e.bib;thesis-b.bib;thesis-m.bib;thesis-d.bib';
     $bib_param_ej = $bib_param_e . ';prg-j.bib';
-    $code = <<<HTML
-<div>
-  <div class='linksblock'>
-    <a title='publications of the group' href='https://prg.is.titech.ac.jp/papers/'>👥</a>
+    if ($lang == "ja") {
+        $bib_param_e = $bib_param_ej;
+        $ej_button = "";
+    } else {
+        $ej_button = <<<HTML
     <a title='publications both in English and Japanese' 
        href='$bib_url?frameset&amp;$bib_param_ej'>
         <div style='position: absolute; padding-left: 8px; padding-top: 2px;'>
@@ -73,6 +74,13 @@ function prg_bib_personal_list( $atts ) {
         </div>
         <span class='transparent'>👥</span> 
     </a> 
+HTML;
+    }
+    $code = <<<HTML
+<div>
+  <div class='linksblock'>
+    <a title='publications of the group' href='https://prg.is.titech.ac.jp/papers/'>👥</a>
+    $ej_button
     <a title='full page view' 
        href='$bib_url?$author_param&amp;$bib_param_e'>
        ⛶
@@ -109,6 +117,8 @@ function prg_bib_shortcode( $atts ) {
 		),
 		$atts
 	);
+    $lang = get_bloginfo("language");
+
     $code = "";
     if($atts['more']=='true' && is_front_page() ){
         // when the post/page is shown on the front page, this will
@@ -119,7 +129,7 @@ function prg_bib_shortcode( $atts ) {
     } else if ($atts['author']!='') {
         // when there is an author parameter, show a list of all
         // papers authored by the given name
-        $code .= prg_bib_personal_list($atts);
+        $code .= prg_bib_personal_list($atts, $lang);
     } else {
         // otherwise, there should be a key parameter, and show
         // per-article pages
