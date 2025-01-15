@@ -99,9 +99,27 @@ function prg_bib_articles( $atts ) {
     $code = "";
     foreach(preg_split("/\,/", $atts['key']) as $key) {
         $code .= "
-<iframe src='https://prg.is.titech.ac.jp/papers/bibtexbrowser.php?key=". $key ."&bib=prg-e.bib;prg-j.bib;thesis-d.bib;thesis-m.bib;thesis-b.bib' class='bibtexbrowser' onload='resizeIframe(this)'></iframe>";
+<iframe id='". $key .
+              "' src='https://prg.is.titech.ac.jp/papers/bibtexbrowser.php?key=". $key ."&bib=prg-e.bib;prg-j.bib;thesis-d.bib;thesis-m.bib;thesis-b.bib' class='bibtexbrowser' onload='resizeIframe(this)'></iframe>";
     }
     return $code;
+}
+
+// index
+function prg_bib_embed_index( $atts , $no_jump_link, $referer_url ) {
+    $code = "
+<iframe src='https://prg.is.titech.ac.jp/papers/bibindex.php?keys="
+          . $atts['key'] .
+"&bib=prg-e.bib;prg-j.bib;thesis-d.bib;thesis-m.bib;thesis-b.bib"
+          . ($no_jump_link ? "" : "&parent=" . urlencode($referer_url)) .
+          "' class='bibtexbrowser' onload='resizeIframe(this)'></iframe>";
+    return $code;
+    //NOTE: when $referer_url contains '&' (e.g.,
+    //"/ja/?p=8738&preview=true"), the src URL for the iframe becomes
+    //https://.../bibindex.php?...&parent=/ja/?p=8738&preview=true
+    //where the preview parameter is not part of the parent but for
+    //the iframe.  Hence converting & to an escape character by using
+    //urlencode() is important.
 }
 
 // Add Shortcode
@@ -114,13 +132,25 @@ function prg_bib_shortcode( $atts ) {
 			'key' => '',
             'more' => 'true',
             'author' => '',
+            'index' => '',
 		),
 		$atts
 	);
     $lang = get_bloginfo("language");
 
     $code = "";
-    if($atts['more']=='true' && is_front_page() ){
+
+    $show_more = $atts['more']=='true' && is_front_page() ;
+
+    if($atts['index']==true) {
+        $code .= prg_bib_embed_index($atts, $show_more ,
+                                     $_SERVER['REQUEST_URI']);
+        //NOTE: get_the_permalink gives a URI of the current page
+        //without parameters whereas $_SERVER['REQUEST_URI'] includes
+        //everything.
+    }
+
+    if($show_more){
         // when the post/page is shown on the front page, this will
         // produce only a "(more...)" link to the standalone page.
         // Otherwise (i.e., when it is shown as a standalone page), the
