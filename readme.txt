@@ -3,7 +3,7 @@ Contributors: masuhara
 Tags: bibtex, bibliography, citation
 Requires at least: 5.2
 Tested up to: 6.6.1
-Stable tag: v0.1.12-alpha
+Stable tag: v0.1.13-alpha
 Requires PHP: 7.2
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -28,6 +28,8 @@ To show a list of the papers authored by Hidehiko:
 Parameters:
 - key: specifies entries as a comma-separated list of bib keys.
 - more: displays a "(more...)" link to the bibliography page instead of embedding the bibliography frame in a page, when the page is shown in a front page of a website.  This option is true by default, and turned off when specified a value other than 'true'.
+- index: displays a list of paper titles before the embedded paper entries.  The list is always displayed; i.e., even when 'more' is set true.
+  	 For example `[prg-bib key='alice2099abc,bob2088def' index='true']` shows the titles of the two papers first, followed by two frames each of which embeds the bibliography of each key.  In a front page of a website, it shows a list of titles followed by the "(more...)" link.
 
 = How to update =
 1. Decide the release name (e.g., v0.1.3-alpha)
@@ -42,6 +44,9 @@ Parameters:
 10. Upload the archive (created at step 7) to the release
 
 == Changelog ==
+
+- v0.1.13-alpha
+  NEW: index option 
 
 - v0.1.12-alpha
   author list switches bib files based on the current blog language
