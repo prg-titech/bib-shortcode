@@ -3,7 +3,7 @@
  * Plugin Name:       PRG Bibliography Shortcode
  * Plugin URI:        https://github.com/prg-titech/bib-shortcode/
  * Description:       Shortcode to embed publication lists.
- * Version:           0.1.13-alpha
+ * Version:           0.1.14-alpha
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Hidehiko Masuhara
@@ -33,13 +33,21 @@ function prg_bib_enqueue_scripts() {
     
     // Grab the global $post object.
     global $post;
-    
+
+    // When the shortcode embeds a bibtexbrowser frame, these scripts
+    // and styles shall be enqueued.  By theory, they are needed only
+    // when a page contains the embedded frame.  However, we always
+    // enqueue them because they are needed for the embedded frames
+    // appearing on the front page, and we cannot find a good way to
+    // determine whether any of the pages appearing on the front page
+    // contains the embedded frame.
+
     // See if the post HAS content and, if so, see if it has our shorcode.
-    if ( isset( $post->post_content ) &&
-         has_shortcode( $post->post_content, 'prg-bib' ) ) {
+    // if ( isset( $post->post_content ) &&
+    //      has_shortcode( $post->post_content, 'prg-bib' ) ) {
         wp_enqueue_script( 'resize-iframe-js' );
         wp_enqueue_style( 'prg-bib-style' );
-    }
+    // }
 }
 add_action( 'wp_enqueue_scripts', 'prg_bib_enqueue_scripts' );
 

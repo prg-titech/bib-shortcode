@@ -3,7 +3,7 @@ Contributors: masuhara
 Tags: bibtex, bibliography, citation
 Requires at least: 5.2
 Tested up to: 6.6.1
-Stable tag: v0.1.13-alpha
+Stable tag: v0.1.14-alpha
 Requires PHP: 7.2
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -44,6 +44,9 @@ Parameters:
 10. Upload the archive (created at step 7) to the release
 
 == Changelog ==
+
+- v0.1.14-alpha
+  FIX: always enqueue the script and the styles
 
 - v0.1.13-alpha
   NEW: index option 
