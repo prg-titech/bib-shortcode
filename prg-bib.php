@@ -3,7 +3,7 @@
  * Plugin Name:       PRG Bibliography Shortcode
  * Plugin URI:        https://github.com/prg-titech/bib-shortcode/
  * Description:       Shortcode to embed publication lists.
- * Version:           0.1.15-alpha
+ * Version:           0.1.16-alpha
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Hidehiko Masuhara
@@ -158,7 +158,7 @@ function prg_bib_embed_index( $atts , $no_jump_link, $referer_url ) {
 }
 
 // Add Shortcode
-function prg_bib_shortcode( $atts ) {
+function prg_bib_shortcode( $atts, $content = null ) {
     global $post;
 
 	// Attributes
@@ -185,20 +185,24 @@ function prg_bib_shortcode( $atts ) {
         //everything.
     }
 
+
     if($show_more){
         // when the post/page is shown on the front page, this will
         // produce only a "(more...)" link to the standalone page.
         // Otherwise (i.e., when it is shown as a standalone page), the
         // frame is shown.
         $code .= prg_bib_show_more($atts);
-    } else if ($atts['author']!='') {
-        // when there is an author parameter, show a list of all
-        // papers authored by the given name
-        $code .= prg_bib_personal_list($atts, $lang);
     } else {
-        // otherwise, there should be a key parameter, and show
-        // per-article pages
-        $code .= prg_bib_articles($atts);
+        if($content != null) $code .= $content;
+        if ($atts['author']!='') {
+            // when there is an author parameter, show a list of all
+            // papers authored by the given name
+            $code .= prg_bib_personal_list($atts, $lang);
+        } else {
+            // otherwise, there should be a key parameter, and show
+            // per-article pages
+            $code .= prg_bib_articles($atts);
+        }
     }
 	return $code;
     
